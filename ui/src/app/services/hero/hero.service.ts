@@ -20,7 +20,8 @@ export class HeroService {
   }
 
   getListHero(): Observable<any> {
-    return this.httpClient.get(`${this.api}/`, {headers: this.headers});
+    console.log(this.api);
+    return this.httpClient.get(`${this.api}/hero`, {headers: this.headers});
   }
 
 }

@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    apiUrl: `http://${window.location.hostname}`,
+    apiUrl: `http://localhost:4200`,
     endPoints: 'api',
     port: '8090',
     requiredFieldText: "Campo requerido",
