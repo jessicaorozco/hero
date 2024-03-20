@@ -11,4 +11,9 @@ public interface HeroDao {
 
     Hero findById(Long id);
 
+    Hero create(Hero hero);
+
+    Hero update(Long id, Hero hero);
+
+    boolean delete(Long id);
 }

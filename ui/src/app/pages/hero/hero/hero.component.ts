@@ -4,11 +4,12 @@ import {Router} from "@angular/router";
 import { HeroService } from '../../../services/hero/hero.service';
 import { Hero } from '../../../entity/hero/HeroModel';
 import { environment } from '../../../../environments/environment';
-
+import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, TableModule],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css'
 })
@@ -34,19 +35,22 @@ export class HeroComponent implements OnInit {
       
  }
  
- public getData() {
-  try {
-    this.showDataTable = this.showNoRecordText = false;
-    this.heroService.getListHero().subscribe((response) => {
-     (response.body ) ? this.heroes = response.body : this.heroes = [];  
-     (this.heroes.length > 0) ? this.showDataTable = true :   this.showNoRecordText = false;
-      
-    });
-  } catch (e) {
-    console.error(e);
-  }
+ public getData(): void {
+  this.showDataTable = false;
+  this.showNoRecordText = false;
+  this.heroService.getListHero().subscribe({
+    next: (response) => {
+      this.heroes = response.body || [];
+      this.heroes.forEach(hero => {
+        hero.id;
+        hero.name;
+        hero.power
+      })
+      this.showDataTable = this.heroes.length > 0;
+    },
+    error: (e) => console.error(e)
+  });
 }
-
 public addRegistry() {
   this.router.navigate(['hero-detail']);
 }
@@ -82,6 +86,9 @@ public editData(id: number) {
 //   })
 
 // }
+public getEventValue($event: any): string {
+  return $event.target.value;
+}
 
       
 }
