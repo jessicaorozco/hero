@@ -24,7 +24,7 @@ public class Hero implements Serializable {
     @Getter
     @Setter
     @Column(name = "id")
-    private String id;
+    private Long id;
 
     @Getter
     @Setter

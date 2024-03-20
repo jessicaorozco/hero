@@ -52,22 +52,23 @@ public class HeroDaoImpl implements HeroDao {
         }
     }
 
-    @Override
-    public Optional<Hero> findById(String id) {
-        Optional<Hero> heroOptional = Optional.empty();
+    public Hero findById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("El id no puede ser null");
+        }
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection
                     .prepareStatement("SELECT id, name, power FROM gral.hero WHERE id = ?");
-            statement.setString(1, id); // Asumiendo que id es un String. Si es numérico, usa setLong o setInt.
+            statement.setLong(1, id.longValue()); // Ahora sabemos que id no es null
             ResultSet resultSet = statement.executeQuery();
+            Hero hero = null;
             if (resultSet.next()) {
-                Hero hero = new Hero();
-                hero.setId(resultSet.getString("id")); // Cambia a getString si el id es de tipo String.
+                hero = new Hero();
+                hero.setId(resultSet.getLong("id"));
                 hero.setName(resultSet.getString("name"));
                 hero.setPower(resultSet.getString("power"));
-                heroOptional = Optional.of(hero);
             }
-            return heroOptional;
+            return hero;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
