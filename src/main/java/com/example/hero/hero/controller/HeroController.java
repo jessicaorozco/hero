@@ -14,12 +14,12 @@ public class HeroController {
     @Autowired
     private HeroDao heroDao;
 
-    @GetMapping("/")
+    @GetMapping("api/hero")
     public List<Hero> getListHero() {
         return heroDao.getListHero();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("api/hero/{id}")
     public Hero getHeroById(@PathVariable Long id) {
         Hero hero = heroDao.findById(id);
         return hero;

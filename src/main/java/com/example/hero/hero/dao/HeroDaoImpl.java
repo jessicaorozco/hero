@@ -17,7 +17,6 @@ import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.sql.Connection;
 
 @Repository
@@ -39,7 +38,7 @@ public class HeroDaoImpl implements HeroDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Hero hero = new Hero();
-                hero.setId(resultSet.getString("id"));
+                hero.setId(resultSet.getLong("id"));
                 hero.setName(resultSet.getString("name"));
                 hero.setPower(resultSet.getString("power"));
 
@@ -52,6 +51,7 @@ public class HeroDaoImpl implements HeroDao {
         }
     }
 
+    @Override
     public Hero findById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("El id no puede ser null");
