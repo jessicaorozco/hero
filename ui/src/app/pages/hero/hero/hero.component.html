@@ -12,8 +12,10 @@
   </div>
   
     <div class="h-100" *ngIf="showDataTable">
-
-
+      <div class="h-50  justify-content-center">
+        <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+           <form-loader *ngIf="loading"></form-loader>
+         </div>
       <p-table #dt [value]="heroes" selectionMode="multiple" [(selection)]="heroSelected"
         styleClass="p-datatable-striped" dataKey="id" responsiveLayout="scroll" [paginator]="true"
         [rows]=env.paginatorTools [globalFilterFields]="['id','name','power']"
@@ -68,6 +70,7 @@
     <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
     <form-loader *ngIf="loading"></form-loader>
   </div>
+   
   <table>
     <tr *ngFor="let hero of heroes">
       <td>{{ hero.id }}</td>

@@ -41,8 +41,6 @@ export class HeroComponent implements OnInit {
 
 public getData() {
   this.showDataTable = this.showNoRecordText = false;
-  this.loading = true;
-
   this.heroService.getListHero().subscribe({
     next: (response) => {
       if (response && response.length > 0) {

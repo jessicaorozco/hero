@@ -24,7 +24,9 @@ export class _HeroService {
   getListHero(): Observable<any> {
     return this.httpClient.get(`${this.api}/hero`, {responseType: 'json'});
   }
-  
+  getHeroById(id: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.api}/api/hero/${id}`, {headers: this.headers});
+  }  
   create(model: Hero): Observable<any> {
     return this.httpClient.post(`${this.api}/hero`, model);
   }
