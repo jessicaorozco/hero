@@ -22,7 +22,7 @@ export class _HeroService {
   }
 
   getListHero(): Observable<any> {
-    return this.httpClient.get(`${this.api}/hero`);
+    return this.httpClient.get(`${this.api}/hero`, {responseType: 'json'});
   }
   
   create(model: Hero): Observable<any> {
