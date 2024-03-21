@@ -9,11 +9,11 @@ import { TableModule } from 'primeng/table';
 import { AppComponent } from '../../../app.component';
 import { ButtonModule } from 'primeng/button';
 import { FormLoaderComponent } from '../../form-loader/form-loader.component';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, FormLoaderComponent ],
+  imports: [CommonModule, TableModule, ButtonModule, FormLoaderComponent, ProgressSpinnerModule  ],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css'
 })
@@ -30,7 +30,7 @@ export class HeroComponent implements OnInit {
     private heroService: _HeroService
     ) {}
 
-    ngOnInit():void{
+    ngOnInit(){
       this.getData();      
  }
 
@@ -39,20 +39,33 @@ export class HeroComponent implements OnInit {
 }
 
 
-  public getData() {
-    this.showDataTable = false;
-    this.loading=true;
-    this.showNoRecordText = false;
-    this.heroService.getListHero().subscribe({
-      next: (response) => {
-          this.loading=false;
-        this.showDataTable = this.heroes.length > 0;
-        this.heroes = JSON.stringify(response.body, null, 2);
-                
-      },
-      error: (e) => {this.heroes = []; console.error(e)}
-    });
-  }
+public getData() {
+  this.showDataTable = this.showNoRecordText = false;
+  this.loading=true;
+  this.heroService.getListHero().subscribe({
+    next: (response) => {
+      if (response && response.length > 0) {
+        this.loading = false;
+        this.heroes = response;
+        this.showDataTable = true;
+
+      } else {
+        this.showNoRecordText = true;
+        this.loading = false;
+
+      }
+    },
+    error: (e) => {
+      this.loading = false;
+      this.heroes = [];
+      this.showDataTable = false;
+      this.showNoRecordText = true;
+      console.error(e);
+    }
+  });
+  this.loading = false;
+}
+
 
  
 
