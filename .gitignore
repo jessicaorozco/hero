@@ -27,6 +27,8 @@ target/
 /.nb-gradle/
 build/
 !**/src/main/**/build/
+src/main/java/com/example/hero/DatabaseService.java
+
 !**/src/test/**/build/
 
 ### VS Code ###
