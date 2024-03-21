@@ -1,20 +1,17 @@
-
+<!-- 
 <div class="w-100 h-100 p-5">
    
 <div class="d-flex flex-column w-100 h-100">
-  <!-- <div class="headerContent">
+  <div class="headerContent">
     
     <button class="deleteButton" (click)="deleteModalData()" [disabled]="heroSelected.length === 0"
               ></button> 
-  </div> -->
+  </div>
   <div class="justify-content-end d-flex mb-2">
     <button class="addButton" (click)="addRegistry()"></button>
   </div>
   
     <div class="h-100" *ngIf="showDataTable">
-      <div class="justify-content-center d-flex">
-        <form-loader *ngIf="loading"></form-loader>
-      </div>
 
 
       <p-table #dt [value]="heroes" selectionMode="multiple" [(selection)]="heroSelected"
@@ -65,4 +62,21 @@
     </div>
   </div>
 
+</div> -->
+<div *ngIf="showDataTable">
+  <div class="justify-content-center d-flex">
+    <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+    <form-loader *ngIf="loading"></form-loader>
+  </div>
+  <table>
+    <tr *ngFor="let hero of heroes">
+      <td>{{ hero.id }}</td>
+      <td>{{ hero.name }}</td>
+      <td>{{ hero.power }}</td>
+    </tr>
+  </table>
 </div>
+<div *ngIf="showNoRecordText">
+  No hay registros para mostrar.
+</div>
+
