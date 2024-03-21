@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { Hero } from '../../entity/hero/HeroModel';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,19 @@ export class _HeroService {
   }
 
   getListHero(): Observable<any> {
-    console.log(this.api);
-    return this.httpClient.get(`${this.api}/hero`, {headers: this.headers});
+    return this.httpClient.get(`${this.api}/hero`);
+  }
+  
+  create(model: Hero): Observable<any> {
+    return this.httpClient.post(`${this.api}/hero`, model);
+  }
+
+  update(id: string | number, model: Hero): Observable<any> {
+    return this.httpClient.put(`${this.api}/hero/${id}`, model);
+  }
+
+  remove(id: string | number): Observable<any> {
+    return this.httpClient.delete(`${this.api}/hero/${id}`);
   }
   
 

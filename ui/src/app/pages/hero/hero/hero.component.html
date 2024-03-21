@@ -1,14 +1,22 @@
-<div class="d-flex flex-column w-100 h-100">
-  <div class="headerContent">
-    <button class="addButton" (click)="addRegistry()"></button>
-    <!-- <button class="deleteButton" (click)="deleteModalData()" [disabled]="heroSelected.length === 0"
-              ></button> -->
-  </div>
 
-  <div class="w-100 h-100 p-5">
-    <h4 class="headerTitle">Heroes</h4>
-    <hr class="hrTitle">
+<div class="w-100 h-100 p-5">
+   
+<div class="d-flex flex-column w-100 h-100">
+  <!-- <div class="headerContent">
+    
+    <button class="deleteButton" (click)="deleteModalData()" [disabled]="heroSelected.length === 0"
+              ></button> 
+  </div> -->
+  <div class="justify-content-end d-flex mb-2">
+    <button class="addButton" (click)="addRegistry()"></button>
+  </div>
+  
     <div class="h-100" *ngIf="showDataTable">
+      <div class="justify-content-center d-flex">
+        <form-loader *ngIf="loading"></form-loader>
+      </div>
+
+
       <p-table #dt [value]="heroes" selectionMode="multiple" [(selection)]="heroSelected"
         styleClass="p-datatable-striped" dataKey="id" responsiveLayout="scroll" [paginator]="true"
         [rows]=env.paginatorTools [globalFilterFields]="['id','name','power']"
@@ -58,25 +66,3 @@
   </div>
 
 </div>
-
-<!-- 
-<p-table [value]="heroes" [tableStyle]="{ 'min-width': '50rem' }">
-  <ng-template pTemplate="header">
-      <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Powers</th>
-          
-      </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-hero>
-      <tr>
-          <td>{{ hero.id }}</td>
-          <td>{{ hero.name }}</td>
-          <td>{{ hero.power}}</td>
-          
-      </tr>
-  </ng-template>
-</p-table> -->
-<!-- 
-<p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart> -->
