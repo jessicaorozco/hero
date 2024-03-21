@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Router} from "@angular/router";
-import { HeroService } from '../../../services/hero/hero.service';
+import { _HeroService } from '../../../services/hero/hero.service';
 import { Hero } from '../../../entity/hero/HeroModel';
 import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
+import { AppComponent } from '../../../app.component';
+
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule, TableModule],
+  imports: [CommonModule, TableModule ],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css'
 })
+
 export class HeroComponent implements OnInit {
   heroes: Hero[] =[];
   showDataTable: boolean = false;
@@ -20,40 +23,37 @@ export class HeroComponent implements OnInit {
   env = environment;
   isSelected: string = '';
   heroSelected: Hero[] =[];
-  constructor(
-    private heroService: HeroService,
-    private route: ActivatedRoute,
-    private router: Router,
+  constructor(public app: AppComponent, private router: Router,
+    private heroService: _HeroService
     ) {}
 
-    ngOnInit(): void {
-      try {
-        this.getData();
-      } catch (e) {
-        console.error(e);
-      }
-      
+    ngOnInit():void{
+      this.getData();      
  }
- 
- public getData(): void {
-  this.showDataTable = false;
-  this.showNoRecordText = false;
-  this.heroService.getListHero().subscribe({
-    next: (response) => {
-      this.heroes = response.body || [];
-      this.heroes.forEach(hero => {
-        hero.id;
-        hero.name;
-        hero.power
-      })
-      this.showDataTable = this.heroes.length > 0;
-    },
-    error: (e) => console.error(e)
-  });
-}
-public addRegistry() {
+
+ public addRegistry() {
   this.router.navigate(['hero-detail']);
 }
+
+
+  public getData(): void {
+    this.showDataTable = false;
+    this.showNoRecordText = false;
+    this.heroService.getListHero().subscribe({
+      next: (response) => {
+        this.heroes = response.body || [];
+        this.heroes.forEach(hero => {
+          hero.id;
+          hero.name;
+          hero.power
+        })
+        this.showDataTable = this.heroes.length > 0;
+      },
+      error: (e) => console.error(e)
+    });
+  }
+
+ 
 
 public editData(id: number) {
   try {
@@ -89,6 +89,7 @@ public editData(id: number) {
 public getEventValue($event: any): string {
   return $event.target.value;
 }
+
 
       
 }

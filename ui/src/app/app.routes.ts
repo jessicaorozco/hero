@@ -1,7 +1,10 @@
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HeroComponent } from './pages/hero/hero/hero.component';
+import { ChartComponent } from './pages/chart/chart.component';
 
 export const routes: Routes = [
-    { path: 'hero', component: HeroComponent },
-    { path: '', redirectTo: 'hero', pathMatch: 'full' },
+    { path: 'api/hero', component:HeroComponent },
+    { path: 'chart', component:ChartComponent},
+    { path: '', redirectTo: 'chart', pathMatch: 'full' },
 ];
+    
