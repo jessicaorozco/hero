@@ -28,7 +28,7 @@ target/
 build/
 !**/src/main/**/build/
 src/main/java/com/example/hero/DatabaseService.java
-
+src/main/resources/application.properties
 !**/src/test/**/build/
 
 ### VS Code ###
