@@ -41,29 +41,26 @@ export class HeroComponent implements OnInit {
 
 public getData() {
   this.showDataTable = this.showNoRecordText = false;
-  this.loading=true;
+  this.loading = true;
+
   this.heroService.getListHero().subscribe({
     next: (response) => {
       if (response && response.length > 0) {
-        this.loading = false;
         this.heroes = response;
         this.showDataTable = true;
-
       } else {
         this.showNoRecordText = true;
-        this.loading = false;
-
       }
+      this.loading = false; 
     },
     error: (e) => {
-      this.loading = false;
       this.heroes = [];
       this.showDataTable = false;
       this.showNoRecordText = true;
       console.error(e);
+      this.loading = false;
     }
   });
-  this.loading = false;
 }
 
 
