@@ -10,10 +10,12 @@ import { AppComponent } from '../../../app.component';
 import { ButtonModule } from 'primeng/button';
 import { FormLoaderComponent } from '../../form-loader/form-loader.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MessagesModule } from 'primeng/messages';
+import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, FormLoaderComponent, ProgressSpinnerModule  ],
+  imports: [CommonModule, TableModule, ButtonModule, FormLoaderComponent, ProgressSpinnerModule, ReactiveFormsModule, MessagesModule  ],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css'
 })
@@ -24,25 +26,28 @@ export class HeroComponent implements OnInit {
   loading: boolean=false;
   showNoRecordText: boolean = false;
   env = environment;
+  messages: any;
+  items:any;
   isSelected: string = '';
   heroSelected: Hero[] =[];
   constructor(public app: AppComponent, private router: Router,
     private heroService: _HeroService
-    ) {}
+    ) {
+      
+      
+    }
 
     ngOnInit(){
       this.getData();      
  }
 
  public addRegistry() {
-  this.router.navigate(['hero-detail']);
+  this.router.navigate(['api/hero']);
 }
 
 
 public getData() {
   this.showDataTable = this.showNoRecordText = false;
-  this.loading = true;
-
   this.heroService.getListHero().subscribe({
     next: (response) => {
       if (response && response.length > 0) {
@@ -68,13 +73,16 @@ public getData() {
 
 public editData(id: number) {
   try {
-    this.router.navigate(['hero-detail', id])
+    this.router.navigate(['api/hero/:', id])
   } catch (e) {
     console.error(e);
   }
-}
+
+  }
 public deleteModalData() {
   try {
+    // this.messages.push({severity:"warn", summary:"", detail:"Está seguro que desea Eliminar?"})
+    // this.messages = [{severity: 'warn', summary: 'Información', detail: 'Está seguro que desea Eliminar?'}];
     // this.app.openDeleteModal("hero(s)", () => this.deleteData());
   } catch (e) {
     console.error(e);

@@ -22,19 +22,21 @@ export class _HeroService {
   }
 
   getListHero(): Observable<any> {
-    return this.httpClient.get(`${this.api}/hero`, {responseType: 'json'});
+    return this.httpClient.get(`${this.api}/hero`, {headers: this.headers});
   }
-  
-  create(model: Hero): Observable<any> {
-    return this.httpClient.post(`${this.api}/hero`, model);
+  getHeroById(id: number) : Observable<any>{
+    return this.httpClient.get<any>(`${this.api}/hero/${id}`, {headers: this.headers});
+  }  
+  create(model: Hero) : Observable<any>{
+    return this.httpClient.post(`${this.api}/hero`, model, {headers: this.headers});
   }
 
   update(id: string | number, model: Hero): Observable<any> {
-    return this.httpClient.put(`${this.api}/hero/${id}`, model);
+    return this.httpClient.put(`${this.api}/hero/${id}`, model, {headers: this.headers});
   }
 
-  remove(id: string | number): Observable<any> {
-    return this.httpClient.delete(`${this.api}/hero/${id}`);
+  remove(id: string | number) : Observable<any>{
+    return this.httpClient.delete(`${this.api}/hero/${id}`, {headers: this.headers});
   }
   
 
