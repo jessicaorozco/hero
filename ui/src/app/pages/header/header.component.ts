@@ -19,14 +19,14 @@ export class HeaderComponent {
       {
         label: 'Inicio',
         icon: 'pi pi-fw pi-home',
-        routerLink: ['/chart']
+        routerLink: ['chart']
       },
       {
         label: 'Hero',
         badge: '2',
         badgeSeverity: 'info',
         icon: 'pi pi-fw pi-calendar',
-        routerLink: ['/api/hero'] 
+        routerLink: ['api/hero'] 
       }
 
     ];

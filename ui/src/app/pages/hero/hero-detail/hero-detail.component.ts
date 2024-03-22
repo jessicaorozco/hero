@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Hero } from '../../../entity/hero/HeroModel';
 import { environment } from '../../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from '../../../app.component';
 import { _HeroService } from '../../../services/hero/hero.service';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-hero-detail',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './hero-detail.component.html',
   styleUrl: './hero-detail.component.css'
 })
@@ -18,9 +18,9 @@ export class HeroDetailComponent {
   form: FormGroup = new FormGroup({
     id: new FormControl(''),
     name: new FormControl(''),
-    power:  new FormControl('', )
+    power: new FormControl(''),
 
-  })
+  });
 
   hero: Hero;
 
@@ -32,8 +32,7 @@ export class HeroDetailComponent {
   olderOrderBy : number;
 
   constructor(private route: ActivatedRoute, public app: AppComponent, private router: Router,
-              private formBuilder: FormBuilder, private service: _HeroService) {
-
+              private fb: FormBuilder, private service: _HeroService) {
     this.submitted = false;
     this.id = 0;
     this.olderOrderBy = 0;
@@ -45,28 +44,21 @@ export class HeroDetailComponent {
 
   }
 
-  get f(): { [key: string]: AbstractControl } {
-    return this.form.controls;
-  }
-
   ngOnInit(): void {
-        this.form = this.formBuilder.group(
-      {
-        id: ['', ],
-        name: ['', ],
-        power: ['', ]
-        
-      }
-    );
-    if (this.route.snapshot.params['id'] !== undefined) {
+        if (this.route.snapshot.params['id'] !== undefined) {
       this.id = this.route.snapshot.params['id'];
       this.getData(this.id);
     }
   }
 
+  
+  get f(): { [key: string]: AbstractControl } {
+    return this.form.controls;
+  }
+
   public addRegistry() {
     try {
-      this.router.navigate(['cancellation-reasons']);
+      this.router.navigate(['api/hero']);
     } catch (e) {
       console.error(e);
     }
@@ -74,7 +66,7 @@ export class HeroDetailComponent {
 
   public returnToList() {
     try {
-      this.router.navigate(['cancellation-reasons-list']);
+      this.router.navigate(['api/hero']);
     } catch (e) {
       console.error(e);
     }

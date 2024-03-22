@@ -7,6 +7,7 @@ export const routes: Routes = [
     { path: 'api/hero', component:HeroComponent },
     { path: 'chart', component:ChartComponent},
     { path: '', redirectTo: 'chart', pathMatch: 'full' },
-    { path: 'hero-detail', component:HeroDetailComponent},
+    { path: 'api/hero', component:HeroDetailComponent},
+    { path: 'api/hero/:id', component:HeroDetailComponent},
 ];
     
