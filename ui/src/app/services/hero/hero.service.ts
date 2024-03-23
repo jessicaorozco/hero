@@ -28,7 +28,7 @@ export class _HeroService {
     return this.httpClient.get<any>(`${this.api}/hero/${id}`, {headers: this.headers});
   }  
   create(model: Hero) : Observable<any>{
-    return this.httpClient.post(`${this.api}/hero`, model, {headers: this.headers});
+    return this.httpClient.post(`${this.api}/hero/save`, model, {headers: this.headers});
   }
 
   update(id: string | number, model: Hero): Observable<any> {

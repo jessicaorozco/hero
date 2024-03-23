@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Hero } from '../../../entity/hero/HeroModel';
 import { environment } from '../../../../environments/environment';
@@ -6,11 +6,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from '../../../app.component';
 import { _HeroService } from '../../../services/hero/hero.service';
 import { CommonModule } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { MessagesModule } from 'primeng/messages';
 
 @Component({
   selector: 'app-hero-detail',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DialogModule, InputTextareaModule, MessagesModule],
   templateUrl: './hero-detail.component.html',
   styleUrl: './hero-detail.component.css'
 })
@@ -23,35 +26,36 @@ export class HeroDetailComponent {
   });
 
   hero: Hero;
-
+  messages: any;
+  @Input() id: number | any;
+  @Input() visible: boolean = true;
   submitted: boolean;
   env = environment;
-  id: number;
-  isHide : boolean = false;
-  isShow : boolean = true;
-  olderOrderBy : number;
+  isHide: boolean = false;
+  isShow: boolean = true;
+  olderOrderBy: number;
 
   constructor(private route: ActivatedRoute, public app: AppComponent, private router: Router,
-              private fb: FormBuilder, private service: _HeroService) {
+    private fb: FormBuilder, private service: _HeroService) {
     this.submitted = false;
     this.id = 0;
     this.olderOrderBy = 0;
     this.hero = {
       id: 0,
       name: '',
-      power:''
+      power: ''
     };
 
   }
 
   ngOnInit(): void {
-        if (this.route.snapshot.params['id'] !== undefined) {
+    if (this.route.snapshot.params['id'] !== undefined) {
       this.id = this.route.snapshot.params['id'];
       this.getData(this.id);
     }
   }
 
-  
+
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
@@ -75,21 +79,17 @@ export class HeroDetailComponent {
   public saveRegistry() {
     try {
       this.submitted = true;
-      if (this.form.invalid ) {
+      if (this.form.invalid) {
         return;
       }
-            if (this.id > 0) {
-        // this.app.openUpdateModal(() => this.updateData());
+      if (this.id > 0) {
+         this.updateData();
       } else {
-       this.service.create(this.hero).subscribe(response => {
-       if (response.body.code === '101') {
-            // this.app.openAddAlert('hero');
+        const hero: Hero = this.form.value;
+        this.service.create(hero).subscribe(response => {
+          this.messages = [{ severity: 'sucess', summary: 'hero(s)', detail: 'Registro exitoso' }];
+          console.log(response)
             this.returnToList();
-           }  else if (response.body.code === '105') {
-                      // this.app.openduplicityModal();
-            }  else if (response.body.code === '110') {
-                //  this.app.openWarningModal('The order by already exists on the application.');
-              }
         })
       }
 
@@ -100,15 +100,11 @@ export class HeroDetailComponent {
 
   public updateData() {
     try {
+      // const hero: Hero = this.form.value;
       this.service.update(this.id, this.hero).subscribe(response => {
-       if (response.body.code === '104') {
-          // this.app.openUpdateAlert('cancellation reason');
-          // this.app.updateModal?.toggle();
-          this.returnToList();
-          } else if(response.body.code === '105') {
-            // this.app.openduplicityModal();
-          }
-        })
+        this.messages = [{ severity: 'sucess', summary: 'hero(s)', detail: 'Actualización exitosa' }];
+        console.log(response)
+      })
 
     } catch (e) {
       console.error(e);
@@ -119,9 +115,8 @@ export class HeroDetailComponent {
   public getData(id: number) {
     try {
       this.service.getHeroById(id).subscribe(response => {
-        if (response.body != null) {
-          this.hero= response.body;
-        }
+        this.hero = response;
+        this.form.patchValue(this.hero);
       })
     } catch (e) {
       console.error(e)

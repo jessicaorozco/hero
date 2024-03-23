@@ -1,38 +1,34 @@
-<div class="d-flex flex-column w-100">
+  <div class="d-flex flex-column w-100">
     <div class="headerContent">
-      <button class="backButton" (click)="returnToList()"></button>
-      <button class="addButton" (click)="addRegistry()"></button>
-      <button class="saveButton" (click)="saveRegistry()"></button>
+      <button class="pi pi-arrow-left" (click)="returnToList()"></button>
+      <button class="pi pi-plus" (click)="addRegistry()"></button>
+      <button class="pi pi-save" (click)="saveRegistry()"></button>
     </div>
     <div class="w-100 h-100 ps-5 mb-5">
       <div class="container formCRUD">
-        <h4 class="headerTitle">Hero Details</h4>
+        <h4 class="headerTitle">Súper Hero Details</h4>
         <hr class="hrTitle">
-        <form class="container row pb-5" [formGroup]="form">
+        <form class="form-material" [formGroup]="form">
           <div class="form-group col-6">
             <label class="form-label">Id:</label>
             <div class="input-group">
-              <input type="text" class="form-control shadow-none" formControlName="id" maxlength="50" >
+              <input type="text" class="form-control shadow-none" formControlName="id" maxlength="50" readonly>
             </div>
           </div>
           <div class="form-group col-6">
             <label class="form-label">Name:</label>
             <div class="input-group">
-              <input type="text" class="form-control shadow-none" formControlName="name" maxlength="50" [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
-              <span class="text-danger bg-white border-0 ui-inputgroup-addon">*</span>
-              <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
-                <div *ngIf="f['name'].errors['whitespace']">{{env.requiredFieldText}}</div>
-              </div>
+              <input type="text"  class="form-control" formControlName="name" maxlength="50" >
+      
             </div>
           </div>
           <div class="form-group col-6">
             <label class="form-label">Power:</label>
             <div class="input-group">
-              <input type="text" class="form-control shadow-none" formControlName="power" maxlength="50" [ngClass]="{ 'is-invalid': submitted && f['power'].errors }">
-              <span class="text-danger bg-white border-0 ui-inputgroup-addon">*</span>
-              <div *ngIf="submitted && f['power'].errors" class="invalid-feedback">
-                <div *ngIf="f['power'].errors['whitespace']">{{env.requiredFieldText}}</div>
-              </div>
+              <textarea rows="5" cols="30" pInputTextarea formControlName="power"></textarea>
+              <!-- <input type="text" ngModel="power" class="form-control shadow-none" formControlName="power" maxlength="50" > -->
+      
+              
             </div>
           </div>
           <div class="form-group col-12">
@@ -43,3 +39,7 @@
     </div>
   </div>
   
+
+
+
+

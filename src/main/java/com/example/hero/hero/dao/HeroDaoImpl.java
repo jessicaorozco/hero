@@ -78,7 +78,7 @@ public class HeroDaoImpl implements HeroDao {
     public Hero create(Hero newHero) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO gral.hero (name, power) VALUES ( ?, ?)");
+                    "INSERT INTO gral.hero (id, name, power) VALUES ( ?, ?, ?)");
             statement.setLong(1, newHero.getId());
             statement.setString(2, newHero.getName());
             statement.setString(3, newHero.getPower());
@@ -96,24 +96,6 @@ public class HeroDaoImpl implements HeroDao {
     }
 
     @Override
-    // public Hero update(Long id, Hero hero) {
-    // try (Connection connection = dataSource.getConnection()) {
-    // PreparedStatement updateStatement = connection.prepareStatement(
-    // "UPDATE gral.hero SET name = ?, power = ? WHERE id = ?");
-    // updateStatement.setString(1, hero.getName());
-    // updateStatement.setString(2, hero.getPower());
-    // updateStatement.setLong(3, id);
-
-    // int rowsAffected = updateStatement.executeUpdate();
-    // if (rowsAffected == 0) {
-    // throw new SQLException("updating hero failed, no rows affected.");
-    // }
-    // return hero;
-
-    // } catch (SQLException e) {
-    // throw new RuntimeException(e);
-    // }
-    // }
     public Hero update(Long id, Hero hero) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement updateStatement = connection.prepareStatement(

@@ -31,7 +31,7 @@ public class HeroController {
         return hero;
     }
 
-    @PostMapping("api/hero")
+    @PostMapping("api/hero/save")
     public ResponseEntity<Hero> create(@RequestBody Hero hero) {
         Hero newHero = heroDao.create(hero);
         return ResponseEntity.ok(newHero);
