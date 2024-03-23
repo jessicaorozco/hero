@@ -22,10 +22,10 @@ export class HeaderComponent {
         routerLink: ['chart']
       },
       {
-        label: 'Hero',
+        label: 'Súper Hero',
         badge: '2',
         badgeSeverity: 'info',
-        icon: 'pi pi-fw pi-calendar',
+        icon: 'pi pi-fw pi-ticket',
         routerLink: ['api/hero'] 
       }
 
